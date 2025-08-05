@@ -6,27 +6,40 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:padding="8dp">
 
+    <!-- App Logo -->
     <ImageView
         android:id="@+id/imageViewLogo"
-        android:layout_width="379dp"
-        android:layout_height="141dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:contentDescription="Weather Icon"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/accuweather_logo" />
 
-    <!-- ADD THIS -->
-    <LinearLayout
-        android:id="@+id/forecastContainer"
+    <!-- Scrollable Forecast Container -->
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        android:padding="16dp"
+        android:fillViewport="true"
         app:layout_constraintTop_toBottomOf="@id/imageViewLogo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:id="@+id/forecastContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:divider="?android:attr/dividerHorizontal"
+            android:showDividers="middle" />
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

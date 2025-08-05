@@ -8,9 +8,10 @@ data class DayForecast(val date: String, val minTemp: Double, val maxTemp: Doubl
 class WeatherDataParser {
 
     fun getWeatherIconCode(data: String): Int {
-        val jsonArray = JSONArray(data)
-        val obj = jsonArray.getJSONObject(0)
-        return obj.getInt("WeatherIcon")
+        val root = JSONObject(data)
+        val dailyArray = root.getJSONArray("DailyForecasts")
+        val obj = dailyArray.getJSONObject(0) // First day's forecast
+        return obj.getJSONObject("Day").getInt("Icon")
     }
 
     fun getFiveDayForecast(data: String): List<DayForecast> {

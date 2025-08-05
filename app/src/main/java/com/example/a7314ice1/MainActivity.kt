@@ -2,10 +2,12 @@ package com.example.a7314ice1
 
 import android.os.Bundle
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.a7314ice1.models.DailyForecast
 import com.example.a7314ice1.models.DailyForecastsResponse
 import com.example.a7314ice1.network.RetrofitClient
@@ -51,23 +53,57 @@ class MainActivity : AppCompatActivity() {
 
     private fun displayForecasts(forecastList: List<DailyForecast>) {
         forecastContainer.removeAllViews()
-        for (forecast in forecastList) {
-            val view = TextView(this)
-            view.layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-            val date = forecast.Date.substring(0, 10)
-            val min = forecast.Temperature.Minimum
-            val max = forecast.Temperature.Maximum
-            view.text = "$date\nMin: ${min.Value}${min.Unit}, Max: ${max.Value}${max.Unit}"
-            view.textSize = 18f
-            view.setPadding(8, 16, 8, 16)
-            forecastContainer.addView(view)
+
+    /* --- LOAD LOGO ICON INTO imageViewLogo USING GLIDE ---
+     val iconCode = forecastList[0].Day.Icon.toString().padStart(2, '0')
+    val logoUrl = "https://developer.accuweather.com/sites/default/files/${iconCode}-s.png"
+
+    val imageViewLogo = findViewById<ImageView>(R.id.imageViewLogo)
+    Glide.with(this)
+        .load(logoUrl)
+        .into(imageViewLogo)
+    */
+
+    // --- DISPLAY FORECAST CARDS ---
+    for (forecast in forecastList) {
+        val dayLayout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                setMargins(16, 16, 16, 16)
+            }
+            setPadding(24, 24, 24, 24)
+            setBackgroundResource(android.R.drawable.dialog_holo_light_frame)
+        }
+
+        val date = forecast.Date.substring(0, 10)
+        val min = forecast.Temperature.Minimum
+        val max = forecast.Temperature.Maximum
+
+        val dateView = TextView(this).apply {
+            text = "📅 $date"
+            textSize = 18f
+        }
+
+        val tempView = TextView(this).apply {
+            text = "❄️ Min: ${min.Value}°C   ☀️ Max: ${max.Value}°C"
+            textSize = 16f
+            setPadding(0, 8, 0, 0)
+        }
+
+
+        dayLayout.addView(dateView)
+        dayLayout.addView(tempView)
+
+        forecastContainer.addView(dayLayout)
         }
     }
 
+
+
     private fun showToast(message: String) {
-        Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+    Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
     }
 }
