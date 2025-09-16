@@ -21,25 +21,143 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/accuweather_logo" />
 
-    <!-- Scrollable Forecast Container -->
-    <ScrollView
-        android:id="@+id/scrollView"
+    <LinearLayout
+        android:id="@+id/tabContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewLogo">
+
+        <Button
+            android:id="@+id/btnToday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            android:text="Today" />
+
+        <Button
+            android:id="@+id/btnFiveDay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            android:text="5 Day" />
+
+        <Button
+            android:id="@+id/btnCity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            android:text="City" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/todayContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/imageViewLogo"
+        app:layout_constraintTop_toBottomOf="@id/tabContainer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:id="@+id/todayForecastContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp" />
+        </ScrollView>
+    </FrameLayout>
+
+
+
+    <FrameLayout
+        android:id="@+id/fiveDayContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/tabContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="visible"> <!-- Default -->
+
+        <!-- Reuse your ScrollView + LinearLayout here -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+            <LinearLayout
+                android:id="@+id/forecastContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp" />
+        </ScrollView>
+    </FrameLayout>
+
+
+
+    <FrameLayout
+        android:id="@+id/cityContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/tabContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone">
 
         <LinearLayout
-            android:id="@+id/forecastContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="8dp"
-            android:divider="?android:attr/dividerHorizontal"
-            android:showDividers="middle" />
-    </ScrollView>
+            android:gravity="center_horizontal"
+            android:padding="24dp">
+
+            <!-- City name at top -->
+            <TextView
+                android:id="@+id/cityNameView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Loading..."
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:visibility="visible"
+                android:paddingBottom="12dp"/>
+
+            <!-- Weather icon (optional, you can set programmatically later) -->
+            <ImageView
+                android:id="@+id/cityWeatherIcon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:contentDescription="Weather icon"
+                android:paddingBottom="12dp"/>
+
+            <!-- Current temp + description -->
+            <TextView
+                android:id="@+id/cityWeatherResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🌡️ 20°C\nClear sky"
+                android:textSize="22sp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
